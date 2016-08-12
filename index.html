@@ -34,12 +34,18 @@
             $("#login").on("click", function(){
                 signIn();
             });
-            
+
+            // SMS sifresi button events
+            $("#smsbtn").on("click", function(){
+                smsBtn();
+            });
+
             $("#register").on("click", function(){
                 signUp();
             });
         });
                 
+
         function signIn(){
             
             // sigin code here
@@ -47,6 +53,13 @@
             $.ui.loadContent("main", null, null, "fade");
         }
                 
+        function smsBtn(){
+            
+            // sigin code here
+            
+            $.ui.loadContent("smsbtn", null, null, "fade");
+        }
+
         function signUp(){
         
             // signup code here
@@ -83,8 +96,8 @@
             <br>
             </div>    
             <ul class="list inset">
-                <li><a href="#signin" class="icon user" style="text-align:center">Login</a></li>
-                <li><a href="#signup" class="icon pencil" style="text-align:center">Register</a></li>
+                <li><a href="#signin" class="icon user" style="text-align:center">Giris</a></li>
+                <li><a href="#signup" class="icon pencil" style="text-align:center">Kayit Ol</a></li>
             </ul>
         </div>
         
@@ -124,6 +137,18 @@
             <div style="text-align:center">
             <br>
             <br>
+            <p>ANA SAYFA</p>
+            <br>
+            <br>
+            </div>
+        </div>
+        
+        
+        <!-- Main App View -->
+        <div class="panel" title="Start" id="smsbtn" data-load="startApp">
+            <div style="text-align:center">
+            <br>
+            <br>
             <p>SMS ile gelen şifreyi giriniz</p>
             <br>
             <br>
@@ -131,7 +156,7 @@
             <input name="smsPassword" type="text" placeholder="Sms şifresini giriniz" />
             <a class="button block green" href="#" id="register">Tamam</a>
 
-        </div>
+        </div>        
         
     </div>
 
