@@ -6,10 +6,11 @@
     This template can be used for creating apps that require user login and user registration before starting actual app.
 --> 
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0;" />
-    
     <link rel="stylesheet" type="text/css" href="appframework/af.ui.css" />
     <link rel="stylesheet" type="text/css" href="appframework/icons.css" />
     <script type="text/javascript" charset="utf-8" src="appframework/appframework.ui.min.js"></script>
+    <!--AppFramework plugin for sliding side menu-->
+    <script type="text/javascript" charset="utf-8" src="appframework/plugins/af.slidemenu.js"></script>
 
 <!-- Required if packaging to native app using Intel XDK -->    
     <script src="intelxdk.js"></script>
@@ -32,12 +33,102 @@
             
             // setup signin and signup button events
             $("#login").on("click", function(){
-                signIn();
+
+
+ $.ajax({
+				    type       : "POST",
+				    url        : "http://sirkeci.azurewebsites.net/api/Core/GetResources",
+				    //crossDomain: true,
+				    //xhrFields  : {withCredentials: true},
+				    //async: true,
+        			//contentType: "application/json",
+				    data       : {
+						    "BankCodes": "64218F7293B41CB46541A6C3A1AB5967",
+						    "Branches": "32287A9EC1C9E6BE1A82267F04DC9209",
+						    "EftBranches": "F42CF0F078C6B3EB1CE8D1C5A64F4252",
+						    "Countries": "AA235B88B424E1DD9F88E1249AC91B26",
+						    "Cities": "36767CE9CD93BA78D03F80566C75C63E",
+						    "UI.Labels":"tr",
+						    "UI.Labels":"en",
+						    "UI.Messages":"tr",
+						    "UI.Messages":"en"   
+								},
+				    dataType   : 'json',
+				    success    : function(response) {
+				        console.error(" signin  işlemi başarılı " +JSON.stringify(response));
+				
+				   	 	$.each(JSON.stringify(response), function(i,item){
+				                var tweet = item.text;
+				                console.error("tweet: " +tweet);
+				        });
+
+/*
+                $.ajax({
+				    type       : "POST",
+				    url        : "http://sirkeci.azurewebsites.net/api/Login/VerifyPassword",
+				    crossDomain: true,
+				    //beforeSend : function() {$.mobile.loading('show')},
+				    //complete   : function() {$.mobile.loading('hide')},
+				    data       : {
+								customerNumber : 10695, password : "Az142536",
+								language : "TR",
+								clientDateTime : "2016-07-12 16:02", clientResolution : "800x600", operatingSystem : "IOS",
+								userName : ""
+								},
+				    dataType   : 'json',
+				    success    : function(response) {
+				        console.error(" signin  işlemi başarılı " +JSON.stringify(response));
+				
+				   	 	$.each(JSON.stringify(response), function(i,item){
+				                var tweet = item.text;
+				                console.error("tweet: " +tweet);
+				        });
+				
+				        signIn();*/
+    },
+    error      : function() {
+        //console.error("error");
+        console.error(" signin  işlemi başarısız " );
+    }
+});                     
             });
 
             // SMS sifresi button events
             $("#smsbtn").on("click", function(){
-                smsBtn();
+            	
+$.ajax({
+    type       : "POST",
+    url        : "http://sirkeci.azurewebsites.net/api/Login/VerifyPassword",
+    crossDomain: true,
+    //beforeSend : function() {$.mobile.loading('show')},
+    //complete   : function() {$.mobile.loading('hide')},
+    data       : {
+				customerNumber : 10695, password : "Az142536",
+				language : "TR",
+				clientDateTime : "2016-07-12 16:02", clientResolution : "800x600", operatingSystem : "IOS",
+				userName : ""
+				},
+    dataType   : 'json',
+    success    : function(a, b, c) {
+        console.error(" sms doğrulama işlemi başarılı " +JSON.stringify(response));
+
+				console.log("err a ", a);
+				console.log("err b ", b);
+				console.log("err c ", c);
+
+   	 	$.each(JSON.stringify(a), function(i,item){
+                var tweet = item.text;
+                console.error("tweet: " +tweet);
+        });
+
+        smsBtn();
+    },
+    error      : function() {
+        console.error(" sms doğrulama işlemi başarılı ");
+    }
+});     
+
+                
             });
 
             $("#register").on("click", function(){
@@ -50,14 +141,14 @@
             
             // sigin code here
             
-            $.ui.loadContent("main", null, null, "fade");
+            $.ui.loadContent("smsbtn", null, null, "fade");
         }
                 
         function smsBtn(){
             
-            // sigin code here
+            // sms code here
             
-            $.ui.loadContent("smsbtn", null, null, "fade");
+            $.ui.loadContent("main", null, null, "fade");
         }
 
         function signUp(){
@@ -96,6 +187,7 @@
             <br>
             </div>    
             <ul class="list inset">
+            	                <li><a href="#accounts" class="icon user" style="text-align:center">Hesaplar</a></li>
                 <li><a href="#signin" class="icon user" style="text-align:center">Giris</a></li>
                 <li><a href="#signup" class="icon pencil" style="text-align:center">Kayit Ol</a></li>
             </ul>
@@ -115,6 +207,42 @@
             <a class="button block green" href="#" id="login">Login</a>
         </div>
         
+        
+                <!-- Login View -->
+        <div class="panel" title="Login" id="accounts" data-footer="none">
+            <div style="text-align:center">
+            <br>
+            <br>
+            <p>Hesaplar</p>
+            <br>
+            <br>
+            </div>
+            <table>
+            	<tr> 
+            	 <td> Hesap No</td>
+            	 <td>Sube</td>
+            	 <td>bakiye</td>
+            	</tr>
+            	
+            	<tr> 
+            	 <td> 1</td>
+            	 <td>merkez</td>
+            	 <td>100</td>
+            	</tr>
+            	<tr> 
+            	 <td>2</td>
+            	 <td>Kadikoy Sube</td>
+            	 <td>200</td>
+            	</tr>
+            	<tr> 
+            	 <td>3</td>
+            	 <td>topkapi Sube</td>
+            	 <td>300</td>
+            	</tr>
+            </table>
+
+
+        </div>
         <!-- Register View -->
         <div class="panel" title="Register" id="signup" data-footer="none">
             <div style="text-align:center">
