@@ -131,6 +131,43 @@ $.ajax({
                 
             });
 
+
+//hesap servisini cagiracak method
+            // SMS sifresi button events
+            $("#accbtn").on("click", function(){
+            	
+$.ajax({
+    type       : "POST",
+    url        : "http://sirkeci.azurewebsites.net/api/Login/VerifyPassword",
+    crossDomain: true,
+    data       : {
+				customerNumber : 10695, password : "Az142536",
+				language : "TR",
+				clientDateTime : "2016-07-12 16:02", clientResolution : "800x600", operatingSystem : "IOS",
+				userName : ""
+				},
+    dataType   : 'json',
+    success    : function(a, b, c) {
+        console.error(" sms doğrulama işlemi başarılı " +JSON.stringify(response));
+				console.log("err a ", a);
+				console.log("err b ", b);
+				console.log("err c ", c);
+
+   	 	$.each(JSON.stringify(a), function(i,item){
+                var tweet = item.text;
+                console.error("tweet: " +tweet);
+        });
+
+        smsBtn();
+    },
+    error      : function() {
+        console.error(" sms doğrulama işlemi başarılı ");
+    }
+});     
+
+                
+            });
+            
             $("#register").on("click", function(){
                 signUp();
             });
@@ -187,7 +224,7 @@ $.ajax({
             <br>
             </div>    
             <ul class="list inset">
-            	                <li><a href="#accounts" class="icon user" style="text-align:center">Hesaplar</a></li>
+            	<li><a href="#accounts" class="icon user" style="text-align:center">Hesaplar</a></li>
                 <li><a href="#signin" class="icon user" style="text-align:center">Giris</a></li>
                 <li><a href="#signup" class="icon pencil" style="text-align:center">Kayit Ol</a></li>
             </ul>
@@ -223,7 +260,6 @@ $.ajax({
             	 <td>Sube</td>
             	 <td>bakiye</td>
             	</tr>
-            	
             	<tr> 
             	 <td> 1</td>
             	 <td>merkez</td>
