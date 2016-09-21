@@ -18,7 +18,9 @@
     <script>    
         function onDeviceReady(){ 
             $.ui.launch();
+            window.location.href = '#signin';
             intel.xdk.device.hideSplashScreen();
+            
         }
         document.addEventListener("intel.xdk.device.ready", onDeviceReady, false);
     </script>
@@ -33,7 +35,6 @@
             
             // setup signin and signup button events
             $("#login").on("click", function(){
-/*trestttttt*/
 /*trestttttt*/
 /*trestttttt*/
 /*trestttttt*/
@@ -214,7 +215,7 @@ $.ajax({
     <!-- Views -->
         
         <!-- Welcome View -->
-        <div class="panel" title="Welcome" id="page1" data-header="none" data-footer="none" selected="true">
+        <div class="panel" title="Welcome" id="page1" data-header="none" data-footer="none" >
             <div style="text-align:center">
             <br>
             <br>
@@ -233,7 +234,7 @@ $.ajax({
         </div>
         
         <!-- Login View -->
-        <div class="panel" title="Login" id="signin" data-footer="none">
+        <div class="panel" title="Login" id="signin" data-footer="none" >
             <div style="text-align:center">
             <br>
             <br>
